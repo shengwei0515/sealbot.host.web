@@ -1,5 +1,6 @@
 import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { CookieService } from 'ngx-cookie-service';
 import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -29,7 +30,8 @@ import { ErrorPageComponent } from './pages/error-page/error-page.component';
       useFactory: initConfig,
       deps: [ AppConfigService ],
       multi: true
-    }
+    },
+    CookieService
   ],
   bootstrap: [AppComponent]
 })

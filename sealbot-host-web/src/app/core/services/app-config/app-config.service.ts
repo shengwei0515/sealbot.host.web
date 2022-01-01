@@ -24,6 +24,8 @@ export class AppConfigService {
       .toPromise()
       .then(config => {
         this.baseUrl = config.url;
+      }).catch(error => {
+        console.log(error);
       });
   }
 }
