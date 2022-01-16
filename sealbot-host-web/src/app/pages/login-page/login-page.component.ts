@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { TwitchApis, TwitchOauthCodeFlowGetCodeParameter, TwitchOauthCodeFlowGetCodeResponse } from 'src/app/core/services/http/twitch.content';
-import { HostWebApis, AuthLoginParameter, AuthLoginResponse } from 'src/app/core/services/http/host-webapi.content';
+import { TwitchOauthCodeFlowGetCodeResponse } from 'src/app/core/services/http/twitch.content';
+import { HostWebApis, TwitchLoginAuthorizePageUrlResponse, AuthLoginParameter, AuthLoginResponse } from 'src/app/core/services/http/host-webapi.content';
 import { HttpService } from 'src/app/core/services/http/http.service';
 import { HttpParams } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
@@ -17,16 +17,7 @@ import { CookieService } from 'ngx-cookie-service';
 export class LoginPageComponent implements OnInit {
 
   ifShowPage: boolean = true;
-
-  authPayload = {
-    client_id: 'd6vb8ffiio5l89hdqi0oyahami1j5b',
-    redirect_uri: 'http://localhost:4200/login',
-    response_type: 'code',
-    scope: 'user:read:email',
-  } as TwitchOauthCodeFlowGetCodeParameter;
-
-
-  twichAuthLink: String = "";
+  twitchAuthorizePageUrl = {} as TwitchLoginAuthorizePageUrlResponse;
 
   constructor(
     private route:ActivatedRoute,
@@ -40,7 +31,7 @@ export class LoginPageComponent implements OnInit {
     if (!twitchResponse['code']){
       // not yet login now
       this.ifShowPage = true;
-      this.setLoginHref()
+      this.getAuthorizePageUrl()
     }
     else{
       // user click login, pass data to backend to get jwt token
@@ -54,17 +45,15 @@ export class LoginPageComponent implements OnInit {
     }
   }
 
-  setOauthState() {
-    this.authPayload.state = Math.random().toString(36).slice(2);
-    this.cookie.set('_oauth_state', this.authPayload.state);
+  getAuthorizePageUrl() {
+    this.http.get({url: HostWebApis.TwitchLoginAuthorizePageUrl}).subscribe(
+      res => {
+        this.twitchAuthorizePageUrl = res.body;
+        console.log(this.twitchAuthorizePageUrl.url)
+      }
+    )
   }
 
-  setLoginHref(){
-    this.setOauthState()
-    let params = new HttpParams({fromObject: this.authPayload})
-    this.twichAuthLink = `${TwitchApis.OAUTH2_AUTHORIZE}?${params.toString()}`;
-  }
-  
   verifyState(twitchResponse: TwitchOauthCodeFlowGetCodeResponse) {
     if (this.cookie.get('_oauth_state') != twitchResponse['state']){
       this.router.navigate(['error'])

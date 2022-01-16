@@ -1,5 +1,10 @@
 export class HostWebApis {
+    public static TwitchLoginAuthorizePageUrl = '/api/twitch-login/authorize-page-url'
     public static AuthLogin = '/api/auth/login'
+}
+
+export type TwitchLoginAuthorizePageUrlResponse = {
+    url: URL
 }
 
 export type AuthLoginParameter = {

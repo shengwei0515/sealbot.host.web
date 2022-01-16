@@ -10,13 +10,15 @@ import { AppConfigService, initConfig } from './core/services/app-config/app-con
 import { LoginPageComponent } from './pages/login-page/login-page.component';
 import { HomePageComponent } from './pages/home-page/home-page.component';
 import { ErrorPageComponent } from './pages/error-page/error-page.component';
+import { TwitchLoginPageComponent } from './pages/twitch-login-page/twitch-login-page.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginPageComponent,
     HomePageComponent,
-    ErrorPageComponent
+    ErrorPageComponent,
+    TwitchLoginPageComponent
   ],
   imports: [
     BrowserModule,
