@@ -1,3 +1,7 @@
+
+<div *ngIf="!ifShowPage">
+    now loading ...
+</div>
 <div *ngIf="ifShowPage">
-    <a href="{{ twichAuthLink }}">Login Twitch</a>
+    <a href="{{ twitchAuthorizePageUrl.url }}">Login Twitch</a>
 </div>

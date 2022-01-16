@@ -25,14 +25,11 @@ export class AppConfigService {
       .then(config => {
         this.baseUrl = config.url;
       }).catch(error => {
-        console.log(error);
+        console.log(`AppConfigService.load() failed with ${error}`);
       });
   }
 }
 
-// export function initConfig(config: AppConfigService): () =>  Promise<void> {
-  // return () => config.load();
-// }
 export function initConfig(config: AppConfigService): () =>  Promise<void> {
-  return () => config.load();
+  return () => config.load().catch(error => console.log(`initConfig with error: ${error}`));
 }
