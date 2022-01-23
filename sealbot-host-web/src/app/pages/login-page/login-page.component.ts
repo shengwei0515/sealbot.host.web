@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { HostWebApis, TwitchLoginAuthorizePageUrlResponse, AuthLoginParameter, AuthLoginResponse } from 'src/app/core/services/http/host-webapi.content';
+import { HostWebApis, TwitchLoginAuthorizePageUrlViewModel } from 'src/app/core/services/http/host-webapi.content';
 import { HttpService } from 'src/app/core/services/http/http.service';
 import { CookieService } from 'ngx-cookie-service';
+import { cookieKey } from 'src/app/core/enum/cookie';
 
 @Component({
   selector: 'app-login-page',
@@ -11,7 +12,7 @@ import { CookieService } from 'ngx-cookie-service';
 export class LoginPageComponent implements OnInit {
 
   ifShowPage: boolean = false;
-  twitchAuthorizePageUrl = {} as TwitchLoginAuthorizePageUrlResponse;
+  twitchAuthorizePageUrl = {} as TwitchLoginAuthorizePageUrlViewModel;
 
   constructor(
     private http: HttpService,
@@ -28,7 +29,7 @@ export class LoginPageComponent implements OnInit {
         this.twitchAuthorizePageUrl = res.body;
         let oauthOpaqueValue = new URL(this.twitchAuthorizePageUrl.url).searchParams.get('state');
         if (oauthOpaqueValue !== null){
-          this.cookie.set('_oauth_state', oauthOpaqueValue);
+          this.cookie.set(cookieKey.oauthState, oauthOpaqueValue);
         }
         this.ifShowPage = true;
       }

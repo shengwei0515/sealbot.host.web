@@ -1,5 +1,5 @@
 export type TwitchOauthCodeFlowGetCodeResponse = {
-    code: string;
-    scope: string;
+    code?: string;
+    scope?: string;
     state?: string;
 }
