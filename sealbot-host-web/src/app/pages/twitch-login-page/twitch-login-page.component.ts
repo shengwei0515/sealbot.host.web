@@ -33,7 +33,7 @@ export class TwitchLoginPageComponent implements OnInit {
     } else {
       const getTokenParamter: TwitchLoginTokenParameter = this.codeFlowReponse;
       const query = new HttpParams({fromObject: getTokenParamter})
-      this.httpService.get({url: HostWebApis.TwitchLoginToken, params: query}).subscribe({
+      this.httpService.get({url: HostWebApis.TwitchAuthToken, params: query}).subscribe({
         next: res => {
           const tokenVm: TwitchLoginTokenViewModel = res.body;
           this.cookie.set(cookieKey.oauthAccessToken, tokenVm.accessToken);

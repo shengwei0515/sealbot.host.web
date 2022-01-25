@@ -24,7 +24,7 @@ export class LoginPageComponent implements OnInit {
   }
 
   setupAuthorizePageUrlAndState() {
-    this.http.get({url: HostWebApis.TwitchLoginAuthorizePageUrl}).subscribe(
+    this.http.get({url: HostWebApis.TwitchAuthAuthorizePageUrl}).subscribe(
       res => {
         this.twitchAuthorizePageUrl = res.body;
         let oauthOpaqueValue = new URL(this.twitchAuthorizePageUrl.url).searchParams.get('state');
